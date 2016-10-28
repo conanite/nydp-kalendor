@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'nydp'
+require 'nydp/kalendor'
+
+Nydp.tests *ARGV.map(&:to_sym)

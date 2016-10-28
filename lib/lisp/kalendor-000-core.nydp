@@ -1,0 +1,96 @@
+;; kalendor builtins:
+;;
+;; named-kalendor management
+;;
+;; * kalendor/add    (name label builder) ;; create and return a new instance (overriding name if existing)
+;; * kalendor/find   (name)               ;; return the instance with this name
+;; * kalendor/delete (name)               ;; return the instance with this name
+;; * kalendor/names                       ;; return a list of names
+;; * kalendor/list                        ;; return named-kalendor instances
+;;
+;; simple builders
+;;
+;; * kalendor-build/named
+;; * kalendor-build/annual
+;; * kalendor-build/union
+;; * kalendor-build/intersect
+;; * kalendor-build/subtract
+;; * kalendor-build/list
+;; * kalendor-build/interval
+;; * kalendor-build/weekday
+;; * kalendor-build/month
+;;
+;; retrieve dates
+;;
+;; * kalendor/dates (k from upto) ;; where k is a name, a named kalendor, or a builder
+;;
+;;
+
+(assign kalendor/substitutions
+   {
+     named     'kalendor-build/named
+     weekday   'kalendor-build/weekday
+     annual    'kalendor-build/annual
+     union     'kalendor-build/union
+     intersect 'kalendor-build/intersect
+     subtract  'kalendor-build/subtract
+     list      'kalendor-build/list
+     interval  'kalendor-build/interval
+     weekday   'kalendor-build/weekday
+     month     'kalendor-build/month
+     lookup    'kalendor/find
+   })
+
+(def kalendor/replace-names (expr)
+  (if (and (sym? expr) (kalendor/find expr))
+      `(kalendor/find ',expr)
+      (and (sym? expr) (hash-get kalendor/substitutions expr))
+      (hash-get kalendor/substitutions expr)
+      (pair? expr)
+      (cons (kalendor/replace-names (car expr))
+            (kalendor/replace-names (cdr expr)))
+      expr))
+
+(def kalendor/test (kal from upto)
+  (map to-string (kalendor/dates kal from upto)))
+
+(mac kalendor (name label expr)
+  `(kalendor/add ,(kalendor/replace-names `(named ',name ,label ,expr))))
+
+(kalendor mondays    { en "Mondays"    fr "lundis"     de "Montag"     } (weekday 1))
+(kalendor tuesdays   { en "Tuesdays"   fr "mardis"     de "Dienstag"   } (weekday 2))
+(kalendor wednesdays { en "Wednesdays" fr "mercredis"  de "Mittwoch"   } (weekday 3))
+(kalendor thursdays  { en "Thursdays"  fr "jeudis"     de "Donnerstag" } (weekday 4))
+(kalendor fridays    { en "Fridays"    fr "vendredis"  de "Freitag"    } (weekday 5))
+(kalendor saturdays  { en "Saturdays"  fr "samedis"    de "Samstag"    } (weekday 6))
+(kalendor sundays    { en "Sundays"    fr "dimanches"  de "Sonntag"    } (weekday 0))
+(kalendor weekends   { en "weekends"   fr "weekends"   de "Wochenende" } (union saturdays sundays))
+
+(kalendor a-01-jan     { en "1 jan"      fr "1 janv"     de "1. Januar"  } (annual  1  1))
+(kalendor a-17-mar     { en "17 mar"     fr "17 mars"    de "17. Marz"   } (annual 17  3))
+(kalendor a-01-may     { en "1 may"      fr "1 mai"      de "1. May"     } (annual  1  5))
+(kalendor a-08-may     { en "8 may"      fr "8 mai"      de "8. May"     } (annual  8  5))
+(kalendor a-01-jun     { en "1 jun"      fr "1 juin"     de "1. Juni"    } (annual  1  6))
+(kalendor a-14-jul     { en "14 jul"     fr "14 jul"     de "14. Juli"   } (annual 14  7))
+(kalendor a-01-jun     { en "1 aug"      fr "1 août"     de "1. Aug"     } (annual  1  8))
+(kalendor a-15-aug     { en "15 aug"     fr "15 août"    de "15. Aug"    } (annual 15  8))
+(kalendor a-01-nov     { en "1 nov"      fr "1 nov"      de "1. Nov"     } (annual  1 11))
+(kalendor a-25-dec     { en "25 dec"     fr "25 déc"     de "25. Dez"    } (annual 25 12))
+(kalendor a-26-dec     { en "26 dec"     fr "26 déc"     de "26. Dez"    } (annual 26 12))
+
+(kalendor first-monday-may { en "First monday May" fr "premier lundi mai"    de "Erste Montag May"   } (intersect (weekday 1 1)  (month  5)))
+(kalendor first-monday-jun { en "First monday Jun" fr "premier lundi juin"   de "Erste Montag Juni"  } (intersect (weekday 1 1)  (month  6)))
+(kalendor first-monday-aug { en "First monday Aug" fr "premier lundi août"   de "Erste Montag Aug"   } (intersect (weekday 1 1)  (month  8)))
+(kalendor last-monday-oct  { en "Last monday oct"  fr "dernier lundi oct"    de "Letzte Montag Oct"  } (intersect (weekday 1 -1) (month 10)))
+
+(kalendor easter
+          { en "Easter" fr "Pacques" de "Ostern" }
+          (list "2001-04-15" "2002-03-31" "2003-04-20" "2004-04-11" "2005-03-27" "2006-04-16" "2007-04-08" "2008-03-23" "2009-04-12"
+                "2010-04-04" "2011-04-24" "2012-04-08" "2013-03-31" "2014-04-20" "2015-04-05" "2016-03-27" "2017-04-16" "2018-04-01" "2019-04-21"
+                "2020-04-12" "2021-04-04" "2022-04-17" "2023-04-09" "2024-03-31" "2025-04-20"))
+
+;; (kalendor
+;;   (subtract (interval "2016-06-01" "2016-08-31")
+;;             (union (union saturdays sundays))
+;;    )
+;;  )

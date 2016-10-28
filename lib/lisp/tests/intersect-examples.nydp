@@ -1,0 +1,9 @@
+(examples-for kalendor-build/intrsect
+  ("every weekend in a given interval"
+   (kalendor/test (kalendor "intersect-text" nil (intersect (union (weekday 6)
+                                                                   (weekday 0))
+                                                            (interval "2016-05-01" "2016-06-30")))
+                  "2016-06-01"
+                  "2016-08-31")
+   ("2016-06-04" "2016-06-05" "2016-06-11" "2016-06-12"
+    "2016-06-18" "2016-06-19" "2016-06-25" "2016-06-26")))

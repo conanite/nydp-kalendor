@@ -1,0 +1,100 @@
+require "kalendor"
+require "kalendor/instance/store"
+require "nydp"
+require "nydp/kalendor/version"
+
+module Nydp
+  class Namespace
+    attr_accessor :kalendor_store
+  end
+
+  module Kalendor
+    class Plugin
+      def name ; "Nydp/Kalendor plugin" ; end
+
+      def relative_path name
+        File.expand_path(File.join File.dirname(__FILE__), name)
+      end
+
+      def base_path ; relative_path "../lisp/" ; end
+
+      def load_rake_tasks ; end
+
+      def loadfiles
+        Dir.glob(relative_path '../lisp/kalendor-*.nydp').sort
+      end
+
+      def testfiles
+        Dir.glob(relative_path '../lisp/tests/**/*.nydp')
+      end
+
+      def setup ns
+        store = ns.kalendor_store = ::Kalendor::Instance::Store.new
+        factory = ::Kalendor::Factory.new
+        Symbol.mk("kalendor/add"            ,  ns).assign(Nydp::Kalendor::Builtin::Store::Add        .new store, factory)
+        Symbol.mk("kalendor/find"           ,  ns).assign(Nydp::Kalendor::Builtin::Store::Find       .new store, factory)
+        Symbol.mk("kalendor/delete"         ,  ns).assign(Nydp::Kalendor::Builtin::Store::Delete     .new store, factory)
+        Symbol.mk("kalendor/names"          ,  ns).assign(Nydp::Kalendor::Builtin::Store::Names      .new store, factory)
+        Symbol.mk("kalendor/list"           ,  ns).assign(Nydp::Kalendor::Builtin::Store::List       .new store, factory)
+        Symbol.mk("kalendor/dates"          ,  ns).assign(Nydp::Kalendor::Builtin::Dates             .new store, factory)
+        Symbol.mk("kalendor-build/named"    ,  ns).assign(Nydp::Kalendor::Builtin::Builder::Named    .new store, factory)
+        Symbol.mk("kalendor-build/annual"   ,  ns).assign(Nydp::Kalendor::Builtin::Builder::Annual   .new store, factory)
+        Symbol.mk("kalendor-build/union"    ,  ns).assign(Nydp::Kalendor::Builtin::Builder::Union    .new store, factory)
+        Symbol.mk("kalendor-build/intersect",  ns).assign(Nydp::Kalendor::Builtin::Builder::Intersect.new store, factory)
+        Symbol.mk("kalendor-build/subtract" ,  ns).assign(Nydp::Kalendor::Builtin::Builder::Subtract .new store, factory)
+        Symbol.mk("kalendor-build/list"     ,  ns).assign(Nydp::Kalendor::Builtin::Builder::DateList .new store, factory)
+        Symbol.mk("kalendor-build/interval" ,  ns).assign(Nydp::Kalendor::Builtin::Builder::Interval .new store, factory)
+        Symbol.mk("kalendor-build/weekday"  ,  ns).assign(Nydp::Kalendor::Builtin::Builder::Weekday  .new store, factory)
+        Symbol.mk("kalendor-build/month"    ,  ns).assign(Nydp::Kalendor::Builtin::Builder::Month    .new store, factory)
+      end
+    end
+
+    module Builtin
+      class Base
+        include Nydp::Builtin::Base
+
+        def initialize store, factory
+          @store = store
+          @factory = factory
+        end
+
+        def lookup       kal
+          kal = n2r kal
+          kal.respond_to?(:get_dates) ? kal : @store.find(kal)
+        end
+
+        def name         ; "kalendor/#{super}"     ; end
+      end
+
+      class Dates < Base
+        include ::Kalendor::DateHelper
+        def invoke_4 vm, kal, from, upto
+          vm.push_arg vm.r2n lookup(kal).get_dates(to_date(from), to_date(upto)).to_a
+        end
+      end
+
+      module Store
+        class Add    < Base ; def builtin_invoke_2  vm, kal ; vm.push_arg vm.r2n @store.add n2r kal     ; end ; end
+        class Find   < Base ; def builtin_invoke_2 vm, name ; vm.push_arg vm.r2n @store.find n2r name   ; end ; end
+        class Delete < Base ; def builtin_invoke_2 vm, name ; vm.push_arg vm.r2n @store.delete n2r name ; end ; end
+        class Names  < Base ; def builtin_invoke_1       vm ; vm.push_arg vm.r2n @store.names           ; end ; end
+        class List   < Base ; def builtin_invoke_1       vm ; vm.push_arg vm.r2n @store.list            ; end ; end
+      end
+
+      module Builder
+        class Weekday   < Base ; def builtin_invoke_3         vm, day, nth ; vm.push_arg @factory.weekday day, nth                 ; end
+                                 def builtin_invoke_2              vm, day ; vm.push_arg @factory.weekday day                      ; end ; end
+        class Annual    < Base ; def builtin_invoke_3      vm, date, month ; vm.push_arg @factory.annual date, month               ; end ; end
+        class Union     < Base ; def builtin_invoke               vm, args ; vm.push_arg @factory.union *(n2r args)                ; end ; end
+        class Intersect < Base ; def builtin_invoke               vm, args ; vm.push_arg @factory.intersect *(n2r args)            ; end ; end
+        class Subtract  < Base ; def builtin_invoke_3       vm, keep, toss ; vm.push_arg @factory.subtract keep, toss              ; end ; end
+        class DateList  < Base ; def builtin_invoke               vm, args ; vm.push_arg @factory.list *(n2r args)                 ; end ; end
+        class Interval  < Base ; def builtin_invoke_3       vm, from, upto ; vm.push_arg @factory.interval from, upto              ; end ; end
+        class Month     < Base ; def builtin_invoke_2                vm, m ; vm.push_arg @factory.month m                          ; end ; end
+        class Named     < Base ; def builtin_invoke_4 vm, name, label, kal ; vm.push_arg @factory.named n2r(name), n2r(label), kal ; end ; end
+      end
+    end
+  end
+end
+
+Nydp.plug_in Nydp::Kalendor::Plugin.new
