@@ -75,6 +75,7 @@
 (kalendor a-01-jun     { en "1 aug"      fr "1 août"     de "1. Aug"     } (annual  1  8))
 (kalendor a-15-aug     { en "15 aug"     fr "15 août"    de "15. Aug"    } (annual 15  8))
 (kalendor a-01-nov     { en "1 nov"      fr "1 nov"      de "1. Nov"     } (annual  1 11))
+(kalendor a-11-nov     { en "Armistice Day - 11 nov"     fr "Jour de l'Armistice - 11 nov"     de "Waffenstillstandstag - 11. Nov"    } (annual 11 11))
 (kalendor a-25-dec     { en "25 dec"     fr "25 déc"     de "25. Dez"    } (annual 25 12))
 (kalendor a-26-dec     { en "26 dec"     fr "26 déc"     de "26. Dez"    } (annual 26 12))
 
