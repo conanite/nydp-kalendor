@@ -55,50 +55,55 @@
   (map to-string (kalendor/dates kal from upto)))
 
 (mac kalendor (name label expr)
-  `(kalendor/add ,(kalendor/replace-names `(named ',name ,label ,expr))))
+  ; create a calendar but do not add it to the store
+  (kalendor/replace-names `(named ',name ,label ,expr)))
 
-(kalendor mondays    { en "Mondays"    fr "lundis"     de "Montag"     } (weekday 1))
-(kalendor tuesdays   { en "Tuesdays"   fr "mardis"     de "Dienstag"   } (weekday 2))
-(kalendor wednesdays { en "Wednesdays" fr "mercredis"  de "Mittwoch"   } (weekday 3))
-(kalendor thursdays  { en "Thursdays"  fr "jeudis"     de "Donnerstag" } (weekday 4))
-(kalendor fridays    { en "Fridays"    fr "vendredis"  de "Freitag"    } (weekday 5))
-(kalendor saturdays  { en "Saturdays"  fr "samedis"    de "Samstag"    } (weekday 6))
-(kalendor sundays    { en "Sundays"    fr "dimanches"  de "Sonntag"    } (weekday 0))
-(kalendor weekends   { en "weekends"   fr "weekends"   de "Wochenende" } (union saturdays sundays))
+(mac kalendor/public (name label expr)
+  `(kalendor/add (kalendor ,name ,label ,expr)))
 
-(kalendor a-01-jan     { en "1 jan"      fr "1 janv"     de "1. Januar"  } (annual  1  1))
-(kalendor a-17-mar     { en "17 mar"     fr "17 mars"    de "17. Marz"   } (annual 17  3))
-(kalendor a-01-may     { en "1 may"      fr "1 mai"      de "1. May"     } (annual  1  5))
-(kalendor a-08-may     { en "8 may"      fr "8 mai"      de "8. May"     } (annual  8  5))
-(kalendor a-01-jun     { en "1 jun"      fr "1 juin"     de "1. Juni"    } (annual  1  6))
-(kalendor a-14-jul     { en "14 jul"     fr "14 jul"     de "14. Juli"   } (annual 14  7))
-(kalendor a-01-jun     { en "1 aug"      fr "1 août"     de "1. Aug"     } (annual  1  8))
-(kalendor a-15-aug     { en "15 aug"     fr "15 août"    de "15. Aug"    } (annual 15  8))
-(kalendor a-01-nov     { en "1 nov"      fr "1 nov"      de "1. Nov"     } (annual  1 11))
-(kalendor a-11-nov     { en "Armistice Day - 11 nov"     fr "Jour de l'Armistice - 11 nov"     de "Waffenstillstandstag - 11. Nov"    } (annual 11 11))
-(kalendor a-25-dec     { en "25 dec"     fr "25 déc"     de "25. Dez"    } (annual 25 12))
-(kalendor a-26-dec     { en "26 dec"     fr "26 déc"     de "26. Dez"    } (annual 26 12))
+(kalendor/public mondays    { en "Mondays"    fr "lundis"     de "Montag"     } (weekday 1))
+(kalendor/public tuesdays   { en "Tuesdays"   fr "mardis"     de "Dienstag"   } (weekday 2))
+(kalendor/public wednesdays { en "Wednesdays" fr "mercredis"  de "Mittwoch"   } (weekday 3))
+(kalendor/public thursdays  { en "Thursdays"  fr "jeudis"     de "Donnerstag" } (weekday 4))
+(kalendor/public fridays    { en "Fridays"    fr "vendredis"  de "Freitag"    } (weekday 5))
+(kalendor/public saturdays  { en "Saturdays"  fr "samedis"    de "Samstag"    } (weekday 6))
+(kalendor/public sundays    { en "Sundays"    fr "dimanches"  de "Sonntag"    } (weekday 0))
+(kalendor/public weekends   { en "weekends"   fr "weekends"   de "Wochenende" } (union saturdays sundays))
 
-(kalendor first-monday-may { en "First monday May" fr "premier lundi mai"    de "Erste Montag May"   } (intersect (weekday 1 1)  (month  5)))
-(kalendor first-monday-jun { en "First monday Jun" fr "premier lundi juin"   de "Erste Montag Juni"  } (intersect (weekday 1 1)  (month  6)))
-(kalendor first-monday-aug { en "First monday Aug" fr "premier lundi août"   de "Erste Montag Aug"   } (intersect (weekday 1 1)  (month  8)))
-(kalendor last-monday-oct  { en "Last monday oct"  fr "dernier lundi oct"    de "Letzte Montag Oct"  } (intersect (weekday 1 -1) (month 10)))
+(= kal (hash))
+(= kal.a-01-jan (kalendor a-01-jan     { en "1 jan"      fr "1 janv"     de "1. Januar"  } (annual  1  1)))
+(= kal.a-17-mar (kalendor a-17-mar     { en "17 mar"     fr "17 mars"    de "17. Marz"   } (annual 17  3)))
+(= kal.a-01-may (kalendor a-01-may     { en "1 may"      fr "1 mai"      de "1. May"     } (annual  1  5)))
+(= kal.a-08-may (kalendor a-08-may     { en "8 may"      fr "8 mai"      de "8. May"     } (annual  8  5)))
+(= kal.a-01-jun (kalendor a-01-jun     { en "1 jun"      fr "1 juin"     de "1. Juni"    } (annual  1  6)))
+(= kal.a-14-jul (kalendor a-14-jul     { en "14 jul"     fr "14 jul"     de "14. Juli"   } (annual 14  7)))
+(= kal.a-01-aug (kalendor a-01-aug     { en "1 aug"      fr "1 août"     de "1. Aug"     } (annual  1  8)))
+(= kal.a-15-aug (kalendor a-15-aug     { en "15 aug"     fr "15 août"    de "15. Aug"    } (annual 15  8)))
+(= kal.a-01-nov (kalendor a-01-nov     { en "1 nov"      fr "1 nov"      de "1. Nov"     } (annual  1 11)))
+(= kal.a-11-nov (kalendor a-11-nov     { en "Armistice Day - 11 nov"     fr "Jour de l'Armistice - 11 nov"     de "Waffenstillstandstag - 11. Nov"    } (annual 11 11)))
+(= kal.a-25-dec (kalendor a-25-dec     { en "25 dec"     fr "25 déc"     de "25. Dez"    } (annual 25 12)))
+(= kal.a-26-dec (kalendor a-26-dec     { en "26 dec"     fr "26 déc"     de "26. Dez"    } (annual 26 12)))
 
-(kalendor easter
+(= kal.first-monday-may (kalendor first-monday-may { en "First monday May" fr "premier lundi mai"    de "Erste Montag May"   } (intersect (weekday 1  1) (month  5))))
+(= kal.first-monday-jun (kalendor first-monday-jun { en "First monday Jun" fr "premier lundi juin"   de "Erste Montag Juni"  } (intersect (weekday 1  1) (month  6))))
+(= kal.first-monday-aug (kalendor first-monday-aug { en "First monday Aug" fr "premier lundi août"   de "Erste Montag Aug"   } (intersect (weekday 1  1) (month  8))))
+(= kal.last-monday-oct  (kalendor last-monday-oct  { en "Last monday  Oct" fr "dernier lundi oct"    de "Letzte Montag Oct"  } (intersect (weekday 1 -1) (month 10))))
+
+(kalendor/public easter
           { en "Easter" fr "Pacques" de "Ostern" }
           (list "2001-04-15" "2002-03-31" "2003-04-20" "2004-04-11" "2005-03-27" "2006-04-16" "2007-04-08" "2008-03-23" "2009-04-12"
                 "2010-04-04" "2011-04-24" "2012-04-08" "2013-03-31" "2014-04-20" "2015-04-05" "2016-03-27" "2017-04-16" "2018-04-01" "2019-04-21"
                 "2020-04-12" "2021-04-04" "2022-04-17" "2023-04-09" "2024-03-31" "2025-04-20"))
 
-(kalendor ascension-thursday
+(kalendor/public ascension-thursday
           { en "Ascension Thursday" fr "Jeudi de l'Ascension" de "Himmelfahrtstag" }
           (list "2000-06-01" "2001-05-24" "2002-05-09" "2003-05-29" "2004-05-20" "2005-05-05" "2006-05-25" "2007-05-17" "2008-05-01"
                 "2009-05-21" "2010-05-13" "2011-06-02" "2012-05-17" "2013-05-09" "2014-05-29" "2015-05-14" "2016-05-05" "2017-05-25"
                 "2018-05-10" "2019-05-30" "2020-05-21" "2021-05-13" "2022-05-26" "2023-05-18" "2024-05-09" "2025-05-29" "2026-05-14"
                 "2027-05-06" "2028-05-25" "2029-05-10" "2030-05-30" "2031-05-22" "2032-05-06" "2033-05-26" "2034-05-18" "2035-05-03"))
 
-(kalendor whit-monday
-          { en "Whit Monday" fr "Lundi de Pentecöte" de "Pfingstmontag" }
+(kalendor/public whit-monday
+          { en "Whit Monday" fr "Lundi de Pentecôte" de "Pfingstmontag" }
           (list "2000-06-12" "2001-06-04" "2002-05-20" "2003-06-09" "2004-05-31"                                        "2008-05-12"
                 "2009-06-01" "2010-05-24" "2011-06-13" "2012-05-28" "2013-05-20" "2014-06-09" "2015-05-25" "2016-05-16" "2017-06-05"
                 "2018-05-21" "2019-06-10" "2020-06-01" "2021-05-24" "2022-06-06" "2023-05-29" "2024-05-20" "2025-06-09" "2026-05-25"
