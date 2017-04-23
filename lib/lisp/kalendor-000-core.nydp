@@ -90,7 +90,7 @@
 (= kal.last-monday-oct  (kalendor last-monday-oct  { en "Last monday  Oct" fr "dernier lundi oct"    de "Letzte Montag Oct"  } (intersect (weekday 1 -1) (month 10))))
 
 (kalendor/public easter
-          { en "Easter" fr "Pacques" de "Ostern" }
+          { en "Easter" fr "Pâques" de "Ostern" }
           (list "2001-04-15" "2002-03-31" "2003-04-20" "2004-04-11" "2005-03-27" "2006-04-16" "2007-04-08" "2008-03-23" "2009-04-12"
                 "2010-04-04" "2011-04-24" "2012-04-08" "2013-03-31" "2014-04-20" "2015-04-05" "2016-03-27" "2017-04-16" "2018-04-01" "2019-04-21"
                 "2020-04-12" "2021-04-04" "2022-04-17" "2023-04-09" "2024-03-31" "2025-04-20"))
