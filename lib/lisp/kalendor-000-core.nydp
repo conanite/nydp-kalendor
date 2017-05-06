@@ -26,6 +26,26 @@
 ;;
 ;;
 
+(chapter-start 'kalendor "utilities for defining, building, and manipulating calendars. ")
+
+(dox-add-doc 'kalendor-build/named      'def '("store a new calendar under the given name")                       '(name label expr)  nil '(kalendor))
+(dox-add-doc 'kalendor-build/weekday    'def '("all dates for the given day of the week ;
+                                                if there is a second integer parameter n,
+                                                limit to the nth of the given day each month")                    '(day n)  nil '(kalendor))
+(dox-add-doc 'kalendor-build/annual     'def '("the same specified date in every year")                           '(date month)  nil '(kalendor))
+(dox-add-doc 'kalendor-build/union      'def '("the union of all dates provided by the given calendars")          'args  nil '(kalendor))
+(dox-add-doc 'kalendor-build/intersect  'def '("the intersection of all dates provided by the given calendars")   'args  nil '(kalendor))
+(dox-add-doc 'kalendor-build/subtract   'def '("all the dates of 'keep, except for any dates in 'toss")           '(keep toss)  nil '(kalendor))
+(dox-add-doc 'kalendor-build/list       'def '("a preset list of dates")                                          'args  nil '(kalendor))
+(dox-add-doc 'kalendor-build/interval   'def '("all the dates from 'from upto 'upto (inclusive)")                 '(from upto)  nil '(kalendor))
+(dox-add-doc 'kalendor-build/month      'def '("all the dates in the given month, every year.
+                                                'month is an integer, january is 1")                              '(month)  nil '(kalendor))
+(dox-add-doc 'kalendor/find             'def '("find the given calendar in the store")                            '(name)  nil '(kalendor))
+(dox-add-doc 'kalendor/add              'def '("add the given calendar to the store")                             '(kal)  nil '(kalendor))
+(dox-add-doc 'kalendor/delete           'def '("remove the given calendar from the store")                        '(name)  nil '(kalendor))
+(dox-add-doc 'kalendor/names            'def '("get the list of stored calendar names")                           nil  nil '(kalendor))
+(dox-add-doc 'kalendor/list             'def '("get the list of stored calendars")                                nil  nil '(kalendor))
+
 (assign kalendor/substitutions
    {
      named     'kalendor-build/named
@@ -36,12 +56,12 @@
      subtract  'kalendor-build/subtract
      list      'kalendor-build/list
      interval  'kalendor-build/interval
-     weekday   'kalendor-build/weekday
      month     'kalendor-build/month
      lookup    'kalendor/find
    })
 
 (def kalendor/replace-names (expr)
+  ; used internally by 'kalendor macro
   (if (and (sym? expr) (kalendor/find expr))
       `(kalendor/find ',expr)
       (and (sym? expr) (hash-get kalendor/substitutions expr))
@@ -52,13 +72,17 @@
       expr))
 
 (def kalendor/test (kal from upto)
+  ; used internally for testing kalendor expressions
   (map to-string (kalendor/dates kal from upto)))
 
 (mac kalendor (name label expr)
   ; create a calendar but do not add it to the store
+  ; Note that for a more concise 'expr, you can refer to previously-named calendars by name, and all kalendor-build/XXX functions simply by XXX
   (kalendor/replace-names `(named ',name ,label ,expr)))
 
 (mac kalendor/public (name label expr)
+  ; create a calendar and add it to the store with the given name.
+  ; Note that for a more concise 'expr, you can refer to previously-named calendars by name, and all kalendor-build/XXX functions simply by XXX
   `(kalendor/add (kalendor ,name ,label ,expr)))
 
 (kalendor/public mondays    { en "Mondays"    fr "lundis"     de "Montag"     } (weekday 1))
@@ -114,3 +138,37 @@
 ;;             (union (union saturdays sundays))
 ;;    )
 ;;  )
+
+(assign kalendor/presets {
+  france (fn ()
+             (kalendor/public france-public-holidays
+                       { en "French public holidays" fr "Jours fériés France" de "Ferien, Frankreich" }
+                       (union kal.a-01-jan easter kal.a-01-may kal.a-08-may ascension-thursday whit-monday kal.a-14-jul kal.a-15-aug kal.a-01-nov kal.a-11-nov kal.a-25-dec))
+             (kalendor/public france-non-working-days
+                       { en "weekends and public holidays, France" fr "Jours fériés et weekends, France" de "Ferien und Wochenende, Frankreich" }
+                       (union weekends france-public-holidays))
+             (kalendor/public france-school-holidays-zone-c
+                              { en "school holidays, France, zone C"
+                                fr "vacances scolaires France, zone C"
+                                de "Schulferien France, Zone C" }
+                              (union (interval "2015-10-17" "2015-11-01") (interval "2015-12-19" "2016-01-03") (interval "2016-02-20" "2016-03-06") (interval "2016-04-16" "2016-05-01") (interval "2016-07-04" "2016-08-31")
+                                     (interval "2016-10-19" "2016-11-02") (interval "2016-12-17" "2017-01-02") (interval "2017-02-04" "2017-02-19") (interval "2017-04-01" "2017-04-17") (interval "2017-07-08" "2017-09-03")
+                                     (interval "2017-10-21" "2017-11-05") (interval "2017-12-23" "2018-01-07") (interval "2018-02-17" "2018-03-04") (interval "2018-04-14" "2018-04-29") (interval "2018-07-07" "2018-09-01")))
+             (kalendor/public france-school-holidays-zone-b
+                              { en "school holidays, France, zone B"
+                                fr "vacances scolaires France, zone B"
+                                de "Schulferien France, Zone B" }
+                              (union (interval "2015-10-17" "2015-11-01") (interval "2015-12-19" "2016-01-03") (interval "2016-02-06" "2016-02-21") (interval "2016-04-02" "2016-04-17") (interval "2016-07-04" "2016-08-31")
+                                     (interval "2016-10-19" "2016-11-02") (interval "2016-12-17" "2017-01-02") (interval "2017-02-11" "2017-02-26") (interval "2017-04-08" "2017-04-23") (interval "2017-07-08" "2017-09-03")
+                                     (interval "2017-10-21" "2017-11-05") (interval "2017-12-23" "2018-01-07") (interval "2018-02-24" "2018-03-11") (interval "2018-04-21" "2018-05-06") (interval "2018-07-07" "2018-09-01")))
+             (kalendor/public france-school-holidays-zone-a
+                              { en "school holidays, France, zone A"
+                                fr "vacances scolaires France, zone A"
+                                de "Schulferien France, Zone A" }
+                              (union (interval "2015-10-17" "2015-11-01") (interval "2015-12-19" "2016-01-03") (interval "2016-02-13" "2016-02-29") (interval "2016-04-09" "2016-04-24") (interval "2016-07-04" "2016-08-31")
+                                     (interval "2016-10-19" "2016-11-02") (interval "2016-12-17" "2017-01-02") (interval "2017-02-18" "2017-03-05") (interval "2017-04-15" "2017-05-01") (interval "2017-07-08" "2017-09-03")
+                                     (interval "2017-10-21" "2017-11-05") (interval "2017-12-23" "2018-01-07") (interval "2018-02-10" "2018-02-25") (interval "2018-04-07" "2018-04-22") (interval "2018-07-07" "2018-09-01")))) })
+
+(def kalendor/install (preset)
+  ; install some preset calendars. 'preset must be one of '(france)
+  ((or (hash-get kalendor-presets preset) noop)))
