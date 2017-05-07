@@ -171,4 +171,4 @@
 
 (def kalendor/install (preset)
   ; install some preset calendars. 'preset must be one of '(france)
-  ((or (hash-get kalendor-presets preset) noop)))
+  ((or (hash-get kalendor/presets preset) noop)))
