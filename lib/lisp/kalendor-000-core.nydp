@@ -62,10 +62,12 @@
 
 (def kalendor/replace-names (expr)
   ; used internally by 'kalendor macro
-  (if (and (sym? expr) (kalendor/find expr))
-      `(kalendor/find ',expr)
-      (and (sym? expr) (hash-get kalendor/substitutions expr))
-      (hash-get kalendor/substitutions expr)
+  (if (sym? expr)
+      (if (kalendor/find expr)
+          `(kalendor/find ',expr)
+          (hash-get kalendor/substitutions expr)
+          (hash-get kalendor/substitutions expr)
+          expr)
       (pair? expr)
       (cons (kalendor/replace-names (car expr))
             (kalendor/replace-names (cdr expr)))
@@ -78,7 +80,7 @@
 (mac kalendor (name label expr)
   ; create a calendar but do not add it to the store
   ; Note that for a more concise 'expr, you can refer to previously-named calendars by name, and all kalendor-build/XXX functions simply by XXX
-  `(eval:kalendor/replace-names '(named ',name ,label ,expr)))
+  (kalendor/replace-names `(named ',name ,label ,expr)))
 
 (mac kalendor/public (name label expr)
   ; create a calendar and add it to the store with the given name.
@@ -153,7 +155,7 @@
                                 { en "weekends and public holidays, France"
                                   fr "Jours fériés et weekends, France"
                                   de "Ferien und Wochenende, Frankreich" }
-                                (union weekends france-public-holidays))
+                                (union weekends (lookup 'france-public-holidays)))
 
                (kalendor/private france/private
                                  october
