@@ -5,7 +5,7 @@ require 'nydp/kalendor/version'
 Gem::Specification.new do |spec|
   spec.name          = "nydp-kalendor"
   spec.version       = Nydp::Kalendor::VERSION
-  spec.authors       = ["conanite"]
+  spec.authors       = ["Conan Dalton"]
   spec.email         = ["conan@conandalton.net"]
   spec.summary       = %q{nydp integration for Kalendor gem}
   spec.description   = %q{provides functions and macros to simplify date management within nydp}
