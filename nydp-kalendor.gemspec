@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec_numbering_formatter'
 
   spec.add_dependency             'nydp',     '~> 0.2'
-  spec.add_dependency             'kalendor'
+  spec.add_dependency             'kalendor', '0.0.4'
 end
