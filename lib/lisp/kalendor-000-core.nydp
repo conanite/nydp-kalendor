@@ -161,87 +161,114 @@
                                  october
                                  { en "October school holidays, France"
                                    fr "vacances scolaires France, octobre"
-                                   de "Schulferien France, Oktober" }
+                                   de "Schulferien Frankreich, Oktober" }
                                  (union (interval "2015-10-17" "2015-11-01")
                                         (interval "2016-10-19" "2016-11-02")
-                                        (interval "2017-10-21" "2017-11-05")))
+                                        (interval "2017-10-21" "2017-11-05")
+                                        (interval "2018-10-20" "2018-11-04")
+                                        (interval "2019-10-19" "2019-11-03")
+                                        ))
 
                (kalendor/private france/private
                                  december
                                  { en "December school holidays, France"
-                                   fr "vacances scolaires France, décembre"
-                                   de "Schulferien France, Dezember" }
+                                   fr "Vacances scolaires France, décembre"
+                                   de "Schulferien Frankreich, Dezember" }
                                  (union (interval "2015-12-19" "2016-01-03")
                                         (interval "2016-12-17" "2017-01-02")
-                                        (interval "2017-12-23" "2018-01-07")))
-
-               (kalendor/private france/private
-                                 winter/zone-c
-                                 { en "Winter school holidays, France, Zone C"
-                                   fr "vacances scolaires France, hiver, zone c"
-                                   de "Schulferien France, Winter, Zone C" }
-                                 (union (interval "2016-02-20" "2016-03-06")
-                                        (interval "2017-02-04" "2017-02-19")
-                                        (interval "2018-02-17" "2018-03-04")))
-
-               (kalendor/private france/private
-                                 winter/zone-b
-                                 { en "Winter school holidays, France, Zone B"
-                                   fr "vacances scolaires France, hiver, zone B"
-                                   de "Schulferien France, Winter, Zone B" }
-                                 (union (interval "2016-02-06" "2016-02-21")
-                                        (interval "2017-02-11" "2017-02-26")
-                                        (interval "2018-02-24" "2018-03-11")))
+                                        (interval "2017-12-23" "2018-01-07")
+                                        (interval "2018-12-22" "2019-01-06")
+                                        (interval "2019-12-21" "2020-01-05")
+                                        ))
 
                (kalendor/private france/private
                                  winter/zone-a
                                  { en "Winter school holidays, France, Zone A"
-                                   fr "vacances scolaires France, hiver, zone A"
-                                   de "Schulferien France, Winter, Zone A" }
+                                   fr "Vacances scolaires France, hiver, zone A"
+                                   de "Schulferien Frankreich, Winter, Zone A" }
                                  (union (interval "2016-02-13" "2016-02-29")
                                         (interval "2017-02-18" "2017-03-05")
-                                        (interval "2018-02-10" "2018-02-25")))
+                                        (interval "2018-02-10" "2018-02-25")
+                                        (interval "2019-02-16" "2019-03-03")
+                                        (interval "2020-02-22" "2020-03-08")
+                                        ))
+
+               (kalendor/private france/private
+                                 winter/zone-b
+                                 { en "Winter school holidays, France, Zone B"
+                                   fr "Vacances scolaires France, hiver, zone B"
+                                   de "Schulferien Frankreich, Winter, Zone B" }
+                                 (union (interval "2016-02-06" "2016-02-21")
+                                        (interval "2017-02-11" "2017-02-26")
+                                        (interval "2018-02-24" "2018-03-11")
+                                        (interval "2019-02-09" "2019-02-24")
+                                        (interval "2020-02-15" "2020-03-01")
+                                        ))
+
+               (kalendor/private france/private
+                                 winter/zone-c
+                                 { en "Winter school holidays, France, Zone C"
+                                   fr "Vacances scolaires France, hiver, zone c"
+                                   de "Schulferien Frankreich, Winter, Zone C" }
+                                 (union (interval "2016-02-20" "2016-03-06")
+                                        (interval "2017-02-04" "2017-02-19")
+                                        (interval "2018-02-17" "2018-03-04")
+                                        (interval "2019-02-23" "2019-03-10")
+                                        (interval "2020-02-08" "2020-02-23")
+                                        ))
 
                (kalendor/private france/private
                                  easter/zone-a
                                  { en "Easter school holidays, France, Zone C"
-                                   fr "vacances scolaires France, Paques, zone c"
-                                   de "Schulferien France, Ostern, Zone C" }
+                                   fr "Vacances scolaires France, Paques, zone c"
+                                   de "Schulferien Frankreich, Ostern, Zone C" }
                                  (union (interval "2016-04-16" "2016-05-01")
                                         (interval "2017-04-01" "2017-04-17")
-                                        (interval "2018-04-14" "2018-04-29")))
+                                        (interval "2018-04-14" "2018-04-29")
+                                        (interval "2019-04-13" "2019-04-28")
+                                        (interval "2020-04-18" "2020-05-03")
+                                        ))
 
                (kalendor/private france/private
                                  easter/zone-b
                                  { en "Easter school holidays, France, Zone B"
-                                   fr "vacances scolaires France, Paques, zone B"
-                                   de "Schulferien France, Ostern, Zone B" }
+                                   fr "Vacances scolaires France, Paques, zone B"
+                                   de "Schulferien Frankreich, Ostern, Zone B" }
                                  (union (interval "2016-04-02" "2016-04-17")
                                         (interval "2017-04-08" "2017-04-23")
-                                        (interval "2018-04-21" "2018-05-06")))
+                                        (interval "2018-04-21" "2018-05-06")
+                                        (interval "2019-04-06" "2019-04-22")
+                                        (interval "2020-04-18" "2020-04-26")
+                                        ))
 
                (kalendor/private france/private
-                                 easter/zone-a
-                                 { en "Easter school holidays, France, Zone A"
-                                   fr "vacances scolaires France, Paques, zone A"
-                                   de "Schulferien France, Ostern, Zone A" }
+                                 easter/zone-c
+                                 { en "Easter school holidays, France, Zone C"
+                                   fr "Vacances scolaires France, Paques, zone C"
+                                   de "Schulferien Frankreich, Ostern, Zone C" }
                                  (union (interval "2016-02-13" "2016-02-29")
                                         (interval "2017-02-18" "2017-03-05")
-                                        (interval "2018-02-10" "2018-02-25")))
+                                        (interval "2018-02-10" "2018-02-25")
+                                        (interval "2019-04-20" "2019-05-05")
+                                        (interval "2020-04-04" "2020-04-19")
+                                        ))
 
                (kalendor/private france/private
                                  summer
                                  { en "Summer school holidays, France"
                                    fr "vacances scolaires France, été"
-                                   de "Schulferien France, Sommer" }
+                                   de "Schulferien Frankreich, Sommer" }
                                  (union (interval "2016-07-04" "2016-08-31")
                                         (interval "2017-07-08" "2017-09-03")
-                                        (interval "2018-07-07" "2018-09-01")))
+                                        (interval "2018-07-07" "2018-09-01")
+                                        (interval "2019-07-06" "2019-09-01")
+                                        (interval "2020-07-04" "2020-09-01")
+                                        ))
 
                (kalendor/public france-school-holidays-zone-c
                                 { en "school holidays, France, zone C"
                                   fr "vacances scolaires France, zone C"
-                                  de "Schulferien France, Zone C" }
+                                  de "Schulferien Frankreich, Zone C" }
                                 (union france/private.october
                                        france/private.december
                                        france/private.winter/zone-c
@@ -251,7 +278,7 @@
                (kalendor/public france-school-holidays-zone-b
                                 { en "school holidays, France, zone B"
                                   fr "vacances scolaires France, zone B"
-                                  de "Schulferien France, Zone B" }
+                                  de "Schulferien Frankreich, Zone B" }
                                 (union france/private.october
                                        france/private.december
                                        france/private.winter/zone-b
@@ -261,7 +288,7 @@
                (kalendor/public france-school-holidays-zone-a
                                 { en "school holidays, France, zone A"
                                   fr "vacances scolaires France, zone A"
-                                  de "Schulferien France, Zone A" }
+                                  de "Schulferien Frankreich, Zone A" }
                                 (union france/private.october
                                        france/private.december
                                        france/private.winter/zone-a
