@@ -1,4 +1,5 @@
 require "kalendor"
+require "kalendor/instance"
 require "kalendor/instance/store"
 require "nydp"
 require "nydp/kalendor/version"
@@ -90,16 +91,16 @@ module Nydp
       end
 
       module Builder
-        class Weekday   < Base ; def builtin_invoke_3         vm, day, nth ; vm.push_arg @factory.weekday day, nth                 ; end
-                                 def builtin_invoke_2              vm, day ; vm.push_arg @factory.weekday day                      ; end ; end
-        class Annual    < Base ; def builtin_invoke_3      vm, date, month ; vm.push_arg @factory.annual date, month               ; end ; end
-        class Union     < Base ; def builtin_invoke               vm, args ; vm.push_arg @factory.union *(n2r args)                ; end ; end
-        class Intersect < Base ; def builtin_invoke               vm, args ; vm.push_arg @factory.intersect *(n2r args)            ; end ; end
-        class Subtract  < Base ; def builtin_invoke_3       vm, keep, toss ; vm.push_arg @factory.subtract keep, toss              ; end ; end
-        class DateList  < Base ; def builtin_invoke               vm, args ; vm.push_arg @factory.list *(n2r args)                 ; end ; end
-        class Interval  < Base ; def builtin_invoke_3       vm, from, upto ; vm.push_arg @factory.interval from, upto              ; end ; end
-        class Month     < Base ; def builtin_invoke_2                vm, m ; vm.push_arg @factory.month m                          ; end ; end
-        class Named     < Base ; def builtin_invoke_4 vm, name, label, kal ; vm.push_arg @factory.named n2r(name), n2r(label), kal ; end ; end
+        class Weekday   < Base ; def builtin_invoke_3    vm, day, nth ; vm.push_arg @factory.weekday day, nth              ; end
+                                 def builtin_invoke_2         vm, day ; vm.push_arg @factory.weekday day                   ; end ; end
+        class Annual    < Base ; def builtin_invoke_3 vm, date, month ; vm.push_arg @factory.annual date, month            ; end ; end
+        class Union     < Base ; def builtin_invoke          vm, args ; vm.push_arg @factory.union *(n2r args)             ; end ; end
+        class Intersect < Base ; def builtin_invoke          vm, args ; vm.push_arg @factory.intersect *(n2r args)         ; end ; end
+        class Subtract  < Base ; def builtin_invoke_3  vm, keep, toss ; vm.push_arg @factory.subtract keep, toss           ; end ; end
+        class DateList  < Base ; def builtin_invoke          vm, args ; vm.push_arg @factory.list *(n2r args)              ; end ; end
+        class Interval  < Base ; def builtin_invoke_3  vm, from, upto ; vm.push_arg @factory.interval from, upto           ; end ; end
+        class Month     < Base ; def builtin_invoke_2           vm, m ; vm.push_arg @factory.month m                       ; end ; end
+        class Named     < Base ; def builtin_invoke_4   vm, n, lbl, k ; k.name, k.label = n2r(n), n2r(lbl) ; vm.push_arg k ; end ; end
       end
     end
   end
