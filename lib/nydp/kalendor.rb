@@ -9,6 +9,13 @@ module Nydp
   end
 
   module Kalendor
+    module KalendorInstance
+      include Nydp::AutoWrap
+      def _nydp_whitelist
+        @_nwl ||= Set.new([:name, :label])
+      end
+    end
+
     class Plugin
       def name ; "Nydp/Kalendor plugin" ; end
 
@@ -29,6 +36,7 @@ module Nydp
       end
 
       def setup ns
+        ::Kalendor::Instance::Base.send :include, ::Nydp::Kalendor::KalendorInstance
         store = ns.kalendor_store = ::Kalendor::Instance::Store.new
         factory = ::Kalendor::Factory.new
         Symbol.mk("kalendor/add"            ,  ns).assign(Nydp::Kalendor::Builtin::Store::Add        .new store, factory)
