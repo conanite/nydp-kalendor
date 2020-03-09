@@ -15,6 +15,7 @@ module Nydp
       def _nydp_whitelist
         @_nwl ||= Set.new([:name, :label])
       end
+      def _nydp_procs ; [] ; end
     end
 
     class Plugin
