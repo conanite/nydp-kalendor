@@ -79,29 +79,29 @@ module Nydp
       class Dates < Base
         include ::Kalendor::DateHelper
         def invoke_4 vm, kal, from, upto
-          vm.push_arg vm.r2n lookup(kal).get_dates(to_date(from), to_date(upto)).to_a
+          vm.r2n lookup(kal).get_dates(to_date(from), to_date(upto)).to_a
         end
       end
 
       module Store
-        class Add    < Base ; def builtin_invoke_2  vm, kal ; vm.push_arg vm.r2n @store.add n2r kal     ; end ; end
-        class Find   < Base ; def builtin_invoke_2 vm, name ; vm.push_arg vm.r2n @store.find n2r name   ; end ; end
-        class Delete < Base ; def builtin_invoke_2 vm, name ; vm.push_arg vm.r2n @store.delete n2r name ; end ; end
-        class Names  < Base ; def builtin_invoke_1       vm ; vm.push_arg vm.r2n @store.names           ; end ; end
-        class List   < Base ; def builtin_invoke_1       vm ; vm.push_arg vm.r2n @store.list            ; end ; end
+        class Add    < Base ; def builtin_invoke_2  vm, kal ; vm.r2n @store.add n2r kal     ; end ; end
+        class Find   < Base ; def builtin_invoke_2 vm, name ; vm.r2n @store.find n2r name   ; end ; end
+        class Delete < Base ; def builtin_invoke_2 vm, name ; vm.r2n @store.delete n2r name ; end ; end
+        class Names  < Base ; def builtin_invoke_1       vm ; vm.r2n @store.names           ; end ; end
+        class List   < Base ; def builtin_invoke_1       vm ; vm.r2n @store.list            ; end ; end
       end
 
       module Builder
-        class Weekday   < Base ; def builtin_invoke_3    vm, day, nth ; vm.push_arg @factory.weekday day, nth              ; end
-                                 def builtin_invoke_2         vm, day ; vm.push_arg @factory.weekday day                   ; end ; end
-        class Annual    < Base ; def builtin_invoke_3 vm, date, month ; vm.push_arg @factory.annual date, month            ; end ; end
-        class Union     < Base ; def builtin_invoke          vm, args ; vm.push_arg @factory.union *(n2r args)             ; end ; end
-        class Intersect < Base ; def builtin_invoke          vm, args ; vm.push_arg @factory.intersect *(n2r args)         ; end ; end
-        class Subtract  < Base ; def builtin_invoke_3  vm, keep, toss ; vm.push_arg @factory.subtract keep, toss           ; end ; end
-        class DateList  < Base ; def builtin_invoke          vm, args ; vm.push_arg @factory.list *(n2r args)              ; end ; end
-        class Interval  < Base ; def builtin_invoke_3  vm, from, upto ; vm.push_arg @factory.interval from, upto           ; end ; end
-        class Month     < Base ; def builtin_invoke_2           vm, m ; vm.push_arg @factory.month m                       ; end ; end
-        class Named     < Base ; def builtin_invoke_4   vm, n, lbl, k ; k.name, k.label = n2r(n), n2r(lbl) ; vm.push_arg k ; end ; end
+        class Weekday   < Base ; def builtin_invoke_3    vm, day, nth ; @factory.weekday day, nth              ; end
+                                 def builtin_invoke_2         vm, day ; @factory.weekday day                   ; end ; end
+        class Annual    < Base ; def builtin_invoke_3 vm, date, month ; @factory.annual date, month            ; end ; end
+        class Union     < Base ; def builtin_invoke          vm, args ; @factory.union *(n2r args)             ; end ; end
+        class Intersect < Base ; def builtin_invoke          vm, args ; @factory.intersect *(n2r args)         ; end ; end
+        class Subtract  < Base ; def builtin_invoke_3  vm, keep, toss ; @factory.subtract keep, toss           ; end ; end
+        class DateList  < Base ; def builtin_invoke          vm, args ; @factory.list *(n2r args)              ; end ; end
+        class Interval  < Base ; def builtin_invoke_3  vm, from, upto ; @factory.interval from, upto           ; end ; end
+        class Month     < Base ; def builtin_invoke_2           vm, m ; @factory.month m                       ; end ; end
+        class Named     < Base ; def builtin_invoke_4   vm, n, lbl, k ; k.name, k.label = n2r(n), n2r(lbl) ; k ; end ; end
       end
     end
   end
