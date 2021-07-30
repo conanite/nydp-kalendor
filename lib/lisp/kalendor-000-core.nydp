@@ -168,6 +168,7 @@
                                         (interval "2018-10-20" "2018-11-04")
                                         (interval "2019-10-19" "2019-11-03")
                                         (interval "2020-10-17" "2020-11-01")
+                                        (interval "2021-10-23" "2021-11-08")
                                         ))
 
                (kalendor/private france/private
@@ -181,6 +182,7 @@
                                         (interval "2018-12-22" "2019-01-06")
                                         (interval "2019-12-21" "2020-01-05")
                                         (interval "2020-12-19" "2021-01-03")
+                                        (interval "2021-12-18" "2022-01-03")
                                         ))
 
                (kalendor/private france/private
@@ -194,6 +196,7 @@
                                         (interval "2019-02-16" "2019-03-03")
                                         (interval "2020-02-22" "2020-03-08")
                                         (interval "2021-02-06" "2021-02-21")
+                                        (interval "2022-02-12" "2022-02-28")
                                         ))
 
                (kalendor/private france/private
@@ -207,6 +210,7 @@
                                         (interval "2019-02-09" "2019-02-24")
                                         (interval "2020-02-15" "2020-03-01")
                                         (interval "2021-02-20" "2021-03-07")
+                                        (interval "2022-02-05" "2022-02-21")
                                         ))
 
                (kalendor/private france/private
@@ -220,19 +224,21 @@
                                         (interval "2019-02-23" "2019-03-10")
                                         (interval "2020-02-08" "2020-02-23")
                                         (interval "2021-02-13" "2021-02-28")
+                                        (interval "2022-02-19" "2022-03-07")
                                         ))
 
                (kalendor/private france/private
                                  easter/zone-a
-                                 { en "Easter school holidays, France, Zone C"
-                                   fr "Vacances scolaires France, Paques, zone c"
-                                   de "Schulferien Frankreich, Ostern, Zone C" }
+                                 { en "Easter school holidays, France, Zone A"
+                                   fr "Vacances scolaires France, Paques, zone A"
+                                   de "Schulferien Frankreich, Ostern, Zone A" }
                                  (union (interval "2016-04-16" "2016-05-01")
                                         (interval "2017-04-01" "2017-04-17")
                                         (interval "2018-04-14" "2018-04-29")
                                         (interval "2019-04-13" "2019-04-28")
                                         (interval "2020-04-18" "2020-05-03")
                                         (interval "2021-04-10" "2021-04-25")
+                                        (interval "2022-04-16" "2022-05-02")
                                         ))
 
                (kalendor/private france/private
@@ -246,6 +252,7 @@
                                         (interval "2019-04-06" "2019-04-22")
                                         (interval "2020-04-11" "2020-04-26")
                                         (interval "2021-04-24" "2021-05-09")
+                                        (interval "2022-04-09" "2022-04-25")
                                         ))
 
                (kalendor/private france/private
@@ -259,6 +266,7 @@
                                         (interval "2019-04-20" "2019-05-05")
                                         (interval "2020-04-04" "2020-04-19")
                                         (interval "2021-04-17" "2021-05-02")
+                                        (interval "2022-04-23" "2022-05-09")
                                         ))
 
                (kalendor/private france/private
@@ -271,7 +279,8 @@
                                         (interval "2018-07-07" "2018-09-01")
                                         (interval "2019-07-06" "2019-09-01")
                                         (interval "2020-07-04" "2020-08-31")
-                                        (interval "2021-07-06" "2020-09-01")
+                                        (interval "2021-07-06" "2021-09-01")
+                                        (interval "2022-07-07" "2021-09-02")
                                         ))
 
                (kalendor/public france-school-holidays-zone-c
@@ -304,6 +313,6 @@
                                        france/private.easter/zone-a
                                        france/private.summer))))})
 
+;; install some preset calendars. 'preset must be one of '(france)
 (def kalendor/install (preset)
-  ; install some preset calendars. 'preset must be one of '(france)
   ((or (hash-get kalendor/presets preset) noop)))
