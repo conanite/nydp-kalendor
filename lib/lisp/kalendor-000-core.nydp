@@ -27,24 +27,24 @@
 
 (chapter-start 'kalendor "utilities for defining, building, and manipulating calendars. ")
 
-(dox-add-doc 'kalendor-build/named      'def '("apply a name and label to a calendar")                          '(kal name label) nil '(kalendor))
+(dox-add-doc 'kalendor-build/named      'def '("apply a name and label to a calendar")                          '(kal name label) nil (dox/attrs))
 (dox-add-doc 'kalendor-build/weekday    'def '("all dates for the given day of the week ;
                                                 if there is a second integer parameter n,
-                                                limit to the nth of the given day each month")                  '(day n)  nil '(kalendor))
-(dox-add-doc 'kalendor-build/annual     'def '("the same specified date in every year")                         '(date month)  nil '(kalendor))
-(dox-add-doc 'kalendor-build/union      'def '("the union of all dates provided by the given calendars")        'args  nil '(kalendor))
-(dox-add-doc 'kalendor-build/intersect  'def '("the intersection of all dates provided by the given calendars") 'args  nil '(kalendor))
-(dox-add-doc 'kalendor-build/subtract   'def '("all the dates of 'keep, except for any dates in 'toss")         '(keep toss)  nil '(kalendor))
-(dox-add-doc 'kalendor-build/list       'def '("a preset list of dates")                                        'args  nil '(kalendor))
-(dox-add-doc 'kalendor-build/interval   'def '("all the dates from 'from upto 'upto (inclusive)")               '(from upto)  nil '(kalendor))
+                                                limit to the nth of the given day each month")                  '(day n)  nil (dox/attrs))
+(dox-add-doc 'kalendor-build/annual     'def '("the same specified date in every year")                         '(date month)  nil (dox/attrs))
+(dox-add-doc 'kalendor-build/union      'def '("the union of all dates provided by the given calendars")        'args  nil (dox/attrs))
+(dox-add-doc 'kalendor-build/intersect  'def '("the intersection of all dates provided by the given calendars") 'args  nil (dox/attrs))
+(dox-add-doc 'kalendor-build/subtract   'def '("all the dates of 'keep, except for any dates in 'toss")         '(keep toss)  nil (dox/attrs))
+(dox-add-doc 'kalendor-build/list       'def '("a preset list of dates")                                        'args  nil (dox/attrs))
+(dox-add-doc 'kalendor-build/interval   'def '("all the dates from 'from upto 'upto (inclusive)")               '(from upto)  nil (dox/attrs))
 (dox-add-doc 'kalendor-build/month      'def '("all the dates in the given month, every year.
-                                                'month is an integer, january is 1")                            '(month)  nil '(kalendor))
-(dox-add-doc 'kalendor/find             'def '("find the given calendar in the store")                          '(name)  nil '(kalendor))
-(dox-add-doc 'kalendor/add              'def '("add the given calendar to the store")                           '(kal)  nil '(kalendor))
-(dox-add-doc 'kalendor/delete           'def '("remove the given calendar from the store")                      '(name)  nil '(kalendor))
-(dox-add-doc 'kalendor/names            'def '("get the list of stored calendar names")                         nil  nil '(kalendor))
-(dox-add-doc 'kalendor/list             'def '("get the list of stored calendars")                              nil  nil '(kalendor))
-(dox-add-doc 'kalendor/dates            'def '("get the set of dates from calendar between the given dates")    '(kal from upto)  nil '(kalendor))
+                                                'month is an integer, january is 1")                            '(month)  nil (dox/attrs))
+(dox-add-doc 'kalendor/find             'def '("find the given calendar in the store")                          '(name)  nil (dox/attrs))
+(dox-add-doc 'kalendor/add              'def '("add the given calendar to the store")                           '(kal)  nil (dox/attrs))
+(dox-add-doc 'kalendor/delete           'def '("remove the given calendar from the store")                      '(name)  nil (dox/attrs))
+(dox-add-doc 'kalendor/names            'def '("get the list of stored calendar names")                         nil  nil (dox/attrs))
+(dox-add-doc 'kalendor/list             'def '("get the list of stored calendars")                              nil  nil (dox/attrs))
+(dox-add-doc 'kalendor/dates            'def '("get the set of dates from calendar between the given dates")    '(kal from upto)  nil (dox/attrs))
 
 (assign kalendor/substitutions
    {
