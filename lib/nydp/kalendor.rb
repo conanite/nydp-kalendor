@@ -76,22 +76,22 @@ module Nydp
 
       class Dates < Base
         include ::Kalendor::DateHelper
-        def call kal, from, upto
+        def builtin_call kal, from, upto
           lookup(kal).get_dates(to_date(from), to_date(upto)).to_a._nydp_wrapper
         end
       end
 
       module Store
-        class Add    < Base ; def call  kal ; r2n @store.add n2r kal     ; end ; end
-        class Find   < Base ; def call name ; r2n @store.find n2r name   ; end ; end
-        class Delete < Base ; def call name ; r2n @store.delete n2r name ; end ; end
-        class Names  < Base ; def call      ; r2n @store.names           ; end ; end
-        class List   < Base ; def call      ; r2n @store.list            ; end ; end
+        class Add    < Base ; def builtin_call  kal ; r2n @store.add n2r kal     ; end ; end
+        class Find   < Base ; def builtin_call name ; r2n @store.find n2r name   ; end ; end
+        class Delete < Base ; def builtin_call name ; r2n @store.delete n2r name ; end ; end
+        class Names  < Base ; def builtin_call      ; r2n @store.names           ; end ; end
+        class List   < Base ; def builtin_call      ; r2n @store.list            ; end ; end
       end
 
       module Builder
         class Weekday   < Base
-          def call day, nth=:unset
+          def builtin_call day, nth=:unset
             if nth == :unset
               @factory.weekday day
             else
@@ -101,14 +101,14 @@ module Nydp
         end
 
 
-        class Annual    < Base ; def call date, month ; @factory.annual date, month            ; end ; end
-        class Union     < Base ; def call       *args ; @factory.union *args                   ; end ; end
-        class Intersect < Base ; def call       *args ; @factory.intersect *args               ; end ; end
-        class Subtract  < Base ; def call  keep, toss ; @factory.subtract keep, toss           ; end ; end
-        class DateList  < Base ; def call       *args ; @factory.list *args                    ; end ; end
-        class Interval  < Base ; def call  from, upto ; @factory.interval from, upto           ; end ; end
-        class Month     < Base ; def call           m ; @factory.month m                       ; end ; end
-        class Named     < Base ; def call   n, lbl, k ; k.name, k.label = n2r(n), n2r(lbl) ; k ; end ; end
+        class Annual    < Base ; def builtin_call date, month ; @factory.annual date, month            ; end ; end
+        class Union     < Base ; def builtin_call       *args ; @factory.union *args                   ; end ; end
+        class Intersect < Base ; def builtin_call       *args ; @factory.intersect *args               ; end ; end
+        class Subtract  < Base ; def builtin_call  keep, toss ; @factory.subtract keep, toss           ; end ; end
+        class DateList  < Base ; def builtin_call       *args ; @factory.list *args                    ; end ; end
+        class Interval  < Base ; def builtin_call  from, upto ; @factory.interval from, upto           ; end ; end
+        class Month     < Base ; def builtin_call           m ; @factory.month m                       ; end ; end
+        class Named     < Base ; def builtin_call   n, lbl, k ; k.name, k.label = n2r(n), n2r(lbl) ; k ; end ; end
       end
     end
   end
