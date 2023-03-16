@@ -101,6 +101,7 @@ module Nydp
         end
 
 
+        class Append    < Base ; def builtin_call    one, two ; @factory.append one, two               ; end ; end
         class Annual    < Base ; def builtin_call date, month ; @factory.annual date, month            ; end ; end
         class Union     < Base ; def builtin_call       *args ; @factory.union *args                   ; end ; end
         class Intersect < Base ; def builtin_call       *args ; @factory.intersect *args               ; end ; end
